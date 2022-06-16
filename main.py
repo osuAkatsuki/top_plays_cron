@@ -17,10 +17,22 @@ async def run_cron() -> None:
         ("scores_ap", 2),
     ):
         query = (
-            f"SELECT users.username, users.id, ROUND(s.pp) AS pp FROM {table} s "
-            "LEFT JOIN beatmaps b USING(beatmap_md5) LEFT JOIN users ON users.id = s.userid "
-            f"WHERE s.play_mode = 0 AND s.completed = 3 AND b.ranked = 2 AND users.privileges & 1 AND users.whitelist & {whitelist_int} "
-            "ORDER BY s.pp DESC LIMIT 1"
+            f"""
+            SELECT users.username,
+                   users.id,
+                   ROUND(s.pp) AS pp
+              FROM {table} s
+         LEFT JOIN beatmaps b
+             USING (beatmap_md5)
+         LEFT JOIN users ON users.id = s.userid
+             WHERE s.play_mode = 0
+               AND s.completed = 3
+               AND b.ranked = 2
+               AND users.privileges & 1
+               AND users.whitelist & {whitelist_int}
+          ORDER BY s.pp DESC
+             LIMIT 1
+            """
         )
 
         result = await mysql.fetch_one(query)
