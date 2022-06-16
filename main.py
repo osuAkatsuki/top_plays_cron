@@ -1,6 +1,8 @@
-import databases
+#!/usr/bin/env python3.9
 import asyncio
+
 import aioredis
+import databases
 
 import config
 
