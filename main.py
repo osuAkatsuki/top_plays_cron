@@ -42,7 +42,7 @@ async def run_cron() -> None:
             await redis.set(f"akatsuki:top:{table}:name", "")
             continue
 
-        await redis.set(f"akatsuki:top:{table}:pp", result["pp"])
+        await redis.set(f"akatsuki:top:{table}:pp", int(result["pp"]))
         await redis.set(f"akatsuki:top:{table}:id", result["id"])
         await redis.set(f"akatsuki:top:{table}:name", result["username"])
 
