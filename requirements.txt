@@ -1,3 +1,12 @@
-starlette
+aiomysql==0.1.1
 aioredis==2.0.1
-databases
+anyio==3.6.1
+async-timeout==4.0.2
+databases==0.6.0
+greenlet==1.1.2
+idna==3.3
+PyMySQL==1.0.2
+sniffio==1.2.0
+SQLAlchemy==1.4.37
+starlette==0.20.3
+typing_extensions==4.2.0
