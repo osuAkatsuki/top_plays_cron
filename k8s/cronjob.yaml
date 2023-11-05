@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: CronJob
 metadata:
-  name: top_plays_cron-production
+  name: top-plays-cron-production
 spec:
   schedule: "*/10 * * * *"
   jobTemplate:
@@ -9,8 +9,8 @@ spec:
       template:
         spec:
           containers:
-          - name: top_plays_cron-production
-            image: osuakatsuki/top_plays_cron:latest
+          - name: top-plays-cron-production
+            image: osuakatsuki/top-plays-cron:latest
             imagePullPolicy: Always
             command:
               - ./scripts/bootstrap.sh

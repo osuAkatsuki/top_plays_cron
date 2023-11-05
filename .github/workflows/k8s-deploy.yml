@@ -28,7 +28,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: osuAkatsuki/top_plays_cron
+          images: osuAkatsuki/top-plays-cron
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -37,8 +37,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/top_plays_cron:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/top_plays_cron:${{ github.sha }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/top-plays-cron:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/top-plays-cron:${{ github.sha }}
           labels: ${{ steps.meta.outputs.labels }}
 
       - name: Get kubeconfig from github secrets

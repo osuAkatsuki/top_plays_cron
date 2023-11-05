@@ -11,7 +11,7 @@ fi
 if [[ $PULL_SECRETS_FROM_VAULT -eq 1 ]]; then
   pip install -i $PYPI_INDEX_URL akatsuki-cli
   # TODO: revert to $APP_ENV
-  akatsuki vault get top_plays_cron production-k8s -o .env
+  akatsuki vault get top-plays-cron production-k8s -o .env
   source .env
 fi
 
