@@ -1,13 +1,41 @@
 #!/usr/bin/env python3.9
 import asyncio
 
-import aioredis
+import redis.asyncio as aioredis
 import databases
 
-import config
+import settings
 
-mysql = databases.Database(str(config.MYSQL_DSN))
-redis = aioredis.from_url(str(config.REDIS_DSN))
+
+def dsn(
+    scheme: str,
+    user: str,
+    password: str,
+    host: str,
+    port: int,
+    path: str,
+) -> str:
+    return f"{scheme}://{user}:{password}@{host}:{port}/{path}"
+
+
+mysql = databases.Database(
+    dsn(
+        scheme="mysql",
+        user=settings.DB_USER,
+        password=settings.DB_PASS,
+        host=settings.DB_HOST,
+        port=settings.DB_PORT,
+        path=settings.DB_NAME,
+    )
+)
+redis = aioredis.Redis(
+    host=settings.REDIS_HOST,
+    port=settings.REDIS_PORT,
+    password=settings.REDIS_PASS,
+    db=settings.REDIS_DB,
+    ssl=settings.REDIS_USE_SSL,
+)
+
 
 # @mysql.transaction()
 async def run_cron() -> None:
@@ -16,8 +44,7 @@ async def run_cron() -> None:
         ("scores_relax", 2),
         ("scores_ap", 2),
     ):
-        query = (
-            f"""
+        query = f"""
             SELECT users.username,
                    users.id,
                    ROUND(s.pp) AS pp
@@ -33,7 +60,6 @@ async def run_cron() -> None:
           ORDER BY s.pp DESC
              LIMIT 1
             """
-        )
 
         result = await mysql.fetch_one(query)
         if not result:
@@ -54,6 +80,7 @@ async def main() -> int:
         await run_cron()
 
     return 0
+
 
 if __name__ == "__main__":
     raise SystemExit(asyncio.run(main()))
