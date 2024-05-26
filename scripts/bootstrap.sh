@@ -9,7 +9,7 @@ if [ -z "$APP_ENV" ]; then
 fi
 
 if [[ $PULL_SECRETS_FROM_VAULT -eq 1 ]]; then
-  pip install -i $PYPI_INDEX_URL akatsuki-cli
+  pip install --break-system-packages git+https://github.com/osuAkatsuki/akatsuki-cli
   # TODO: revert to $APP_ENV
   akatsuki vault get top-plays-cron production-k8s -o .env
   source .env
