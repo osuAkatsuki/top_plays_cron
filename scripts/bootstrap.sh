@@ -10,8 +10,7 @@ fi
 
 if [[ $PULL_SECRETS_FROM_VAULT -eq 1 ]]; then
   pip install --break-system-packages git+https://github.com/osuAkatsuki/akatsuki-cli
-  # TODO: revert to $APP_ENV
-  akatsuki vault get top-plays-cron production-k8s -o .env
+  akatsuki vault get top-plays-cron $APP_ENV -o .env
   source .env
 fi
 
