@@ -37,5 +37,5 @@ spec:
           imagePullSecrets:
             - name: osuakatsuki-registry-secret
         metadata:
-          annotations:
+          labels:
             sidecar.istio.io/inject: "false"
